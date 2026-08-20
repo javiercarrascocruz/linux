@@ -497,6 +497,7 @@ static irqreturn_t cc2_low_interrupt(int irq, void *data)
 	if (cc2->process_irqs) {
 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
 				   hwmon_humidity_min_alarm, 0);
+		guard(hwmon_lock)(cc2->hwmon);
 		cc2->rh_alarm.low_alarm = true;
 	}
 
@@ -510,6 +511,7 @@ static irqreturn_t cc2_high_interrupt(int irq, void *data)
 	if (cc2->process_irqs) {
 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
 				   hwmon_humidity_max_alarm, 0);
+		guard(hwmon_lock)(cc2->hwmon);
 		cc2->rh_alarm.high_alarm = true;
 	}
 
