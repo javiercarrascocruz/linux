@@ -126,7 +126,7 @@ static int cc2_enable(struct cc2_data *data)
 	}
 
 	/* clear any pending completion */
-	try_wait_for_completion(&data->complete);
+	reinit_completion(&data->complete);
 
 	ret = regulator_enable(data->regulator);
 	if (ret < 0)
